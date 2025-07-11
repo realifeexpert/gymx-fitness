@@ -1,18 +1,27 @@
+/* ✅ GLOBAL STYLES */
 body {
-  font-family: "Josefin Sans";
+  font-family: "Josefin Sans", sans-serif;
   background-color: #fffafb;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
 }
 
 * {
-  padding: 0px;
-  margin: 0px;
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+/* ✅ Hide default scrollbars */
 ::-webkit-scrollbar {
   width: 0px;
 }
 
+/* ✅ ARROW BUTTONS */
 .right-arrow,
 .left-arrow {
   cursor: pointer;
@@ -24,12 +33,10 @@ body {
   align-items: center;
   color: #ff2625;
   font-size: 25px;
-  border-radius: 4px;
   position: absolute;
   bottom: -20px;
   right: 80px;
-  transform: scale(1, 1);
-  transition: 0.3s all ease-in-out;
+  transition: transform 0.3s ease-in-out;
 }
 
 .right-arrow {
@@ -38,20 +45,18 @@ body {
 
 .right-arrow:hover,
 .left-arrow:hover {
-  transform: scale(1.3, 1.3);
+  transform: scale(1.3);
 }
 
+/* ✅ SCROLL WRAPPER */
 .react-horizontal-scrolling-menu--wrapper {
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
-.detail-image {
-  width: 729px;
-  height: 742px;
-}
-
+/* ✅ HERO IMAGE */
 .hero-banner-img {
   position: absolute;
   right: 40px;
@@ -61,6 +66,27 @@ body {
   margin-top: -330px;
 }
 
+@media screen and (max-width: 1200px) {
+  .hero-banner-img {
+    display: none;
+  }
+}
+
+/* ✅ DETAIL IMAGE */
+.detail-image {
+  width: 729px;
+  height: 742px;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 1200px) {
+  .detail-image {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+/* ✅ CARD STYLING */
 .exercise-card {
   width: 400px;
   height: 445px;
@@ -69,67 +95,27 @@ body {
   border-bottom-left-radius: 20px;
   text-decoration: none;
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
+  justify-content: space-between;
   padding-bottom: 10px;
-  transform: scale(1, 1);
-  transition: 0.3s all ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .exercise-card img {
   height: 326px;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 4px 4px 0 0;
 }
 
-.bodyPart-card {
-  transform: scale(1, 1);
-  transition: 0.3s all ease-in-out;
+.exercise-card:hover {
+  transform: scale(1.05);
 }
 
-.exercise-card:hover,
-.bodyPart-card:hover {
-  transform: scale(1.1, 1.1);
-}
-
-.search-btn:hover {
-  color: #ff2625 !important;
-  border: 1px solid #ff2625 !important;
-}
-
-.exercise-video {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 387px;
-  height: 381px;
-  text-decoration: none;
-}
-
-@media screen and (max-width: 1200px) {
-  .detail-image {
-    width: 300px;
-    height: 300px;
-  }
-
-  .react-horizontal-scrolling-menu--scroll-container {
-    width: 500px;
-  }
-
-  .left-arrow,
-  .right-arrow {
-    position: static !important;
-  }
-
-  .hero-banner-img {
-    display: none;
-  }
-
+@media screen and (max-width: 768px) {
   .exercise-card {
     width: 320px;
-  }
-
-  .exercise-video {
-    width: 320px;
-    height: 300px;
   }
 }
 
@@ -137,4 +123,69 @@ body {
   .exercise-card {
     width: 280px;
   }
+}
+
+/* ✅ BODY PART CARD */
+.bodyPart-card {
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.bodyPart-card:hover {
+  transform: scale(1.05);
+}
+
+/* ✅ SEARCH BUTTON */
+.search-btn:hover {
+  color: #ff2625 !important;
+  border: 1px solid #ff2625 !important;
+}
+
+/* ✅ VIDEO STYLING */
+.exercise-video {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 387px;
+  height: auto;
+  text-decoration: none;
+}
+
+.exercise-video img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .exercise-video {
+    width: 320px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .exercise-video {
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+}
+
+/* ✅ PREVENT UNWANTED SCROLL */
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.exercise-card {
+  width: 100%;
+  height: auto;
+  background: #fff;
+  border-top: 4px solid #ff2625;
+  border-bottom-left-radius: 20px;
+  padding-bottom: 10px;
+  text-decoration: none;
+  transition: transform 0.3s ease-in-out;
 }

@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, TextField, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Stack,
+  TextField,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { exerciseOptions, fetchData } from "../utils/fetchData";
 import HorizontalScrollbar from "./HorizontalScrollbar";
 
@@ -7,8 +14,11 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
   const [search, setSearch] = useState("");
   const [bodyParts, setBodyParts] = useState([]);
 
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const isTablet = useMediaQuery("(max-width:900px)");
+
   useEffect(() => {
-    const fetchExercisesData = async () => {
+    const fetchBodyParts = async () => {
       const bodyPartsData = await fetchData(
         "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
         exerciseOptions
@@ -16,83 +26,125 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
       setBodyParts(["all", ...bodyPartsData]);
     };
 
-    fetchExercisesData();
+    fetchBodyParts();
   }, []);
 
   const handleSearch = async () => {
-    if (search) {
-      const exerciseData = await fetchData(
-        "https://exercisedb.p.rapidapi.com/exercises",
+    if (search.trim()) {
+      const exercisesData = await fetchData(
+        "https://exercisedb.p.rapidapi.com/exercises?limit=10000",
         exerciseOptions
       );
 
-      const searchedExercises = exerciseData.filter((exercise) =>
-        [exercise.name, exercise.target, exercise.equipment, exercise.bodyPart]
-          .join(" ")
-          .toLowerCase()
-          .includes(search.toLowerCase())
+      const searchedExercises = exercisesData.filter(
+        (exercise) =>
+          exercise.name.toLowerCase().includes(search.toLowerCase()) ||
+          exercise.target.toLowerCase().includes(search.toLowerCase()) ||
+          exercise.equipment.toLowerCase().includes(search.toLowerCase()) ||
+          exercise.bodyPart.toLowerCase().includes(search.toLowerCase())
       );
 
-      setExercises(searchedExercises);
       setSearch("");
+      setExercises(searchedExercises);
+      window.scrollTo({ top: 1600, behavior: "smooth" });
     }
   };
 
   return (
-    <>
-      <Stack alignItems="center" mt="37px" justifyContent="center" p="20px">
-        <Typography
-          fontWeight={700}
-          sx={{ fontSize: { lg: "44px", xs: "30px" } }}
-          mb="50px"
-          textAlign="center"
-        >
-          Awesome Exercises You <br /> Should Know
-        </Typography>
-      </Stack>
+    <Stack
+      alignItems="center"
+      justifyContent="center"
+      sx={{
+        mt: isMobile ? "40px" : isTablet ? "50px" : "60px",
+        px: isMobile ? "16px" : isTablet ? "24px" : "32px",
+        width: "100%",
+      }}
+    >
+      <Typography
+        fontWeight={700}
+        textAlign="center"
+        sx={{
+          fontSize: isMobile ? "24px" : isTablet ? "32px" : "42px",
+          mb: isMobile ? "28px" : isTablet ? "34px" : "40px",
+          lineHeight: 1.3,
+        }}
+      >
+        Find Your Perfect Workout
+        <br />
+        <span style={{ color: "#FF2625" }}>Right Now</span>
+      </Typography>
 
-      <Box display="flex" justifyContent="center" mb="72px">
-        <Box position="relative" width={{ lg: "800px", xs: "350px" }}>
-          <TextField
-            fullWidth
-            sx={{
-              input: { height: "56px", padding: "0 20px", fontWeight: "700" },
+      <Box
+        position="relative"
+        width="100%"
+        maxWidth="900px"
+        mb={isMobile ? "40px" : "60px"}
+        px={isMobile ? 0 : 1}
+      >
+        <TextField
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search by name, body part, equipment..."
+          type="text"
+          onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+          fullWidth
+          sx={{
+            input: {
+              fontWeight: 600,
+              padding: isMobile
+                ? "12px 14px"
+                : isTablet
+                ? "14px 18px"
+                : "16px 20px",
+              fontSize: isMobile ? "14px" : isTablet ? "15px" : "16px",
               backgroundColor: "#fff",
-              borderRadius: "40px",
-            }}
-            placeholder="Search Exercises"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+              borderRadius: "50px",
+            },
+            borderRadius: "50px",
+            boxShadow: "0px 4px 15px rgba(0,0,0,0.06)",
+            "& fieldset": {
+              borderColor: "#ddd",
+            },
+            "&:hover fieldset": {
+              borderColor: "#aaa",
+            },
+          }}
+        />
 
-          <Button
-            className="search-btn"
-            sx={{
-              position: "absolute",
-              right: 0,
-              top: 0,
-              height: "56px",
-              width: { lg: "175px", xs: "80px" },
-              fontSize: { lg: "20px", xs: "14px" },
-              backgroundColor: "#FF2625",
-              color: "#fff",
-              textTransform: "none",
-            }}
-            onClick={handleSearch}
-          >
-            Search
-          </Button>
-        </Box>
+        <Button
+          onClick={handleSearch}
+          sx={{
+            position: "absolute",
+            right: "10px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            height: "44px",
+            px: isMobile ? 2 : isTablet ? 3 : 4,
+            fontSize: isMobile ? "13px" : isTablet ? "14px" : "16px",
+            backgroundColor: "#FF2625",
+            color: "#fff",
+            borderRadius: "30px",
+            textTransform: "none",
+            fontWeight: 600,
+            boxShadow: "0px 2px 10px rgba(255, 38, 37, 0.3)",
+            "&:hover": {
+              backgroundColor: "#d21f1f",
+            },
+          }}
+        >
+          Search
+        </Button>
       </Box>
 
-      <Box sx={{ position: "relative", width: "100%", p: "20px" }}>
+      <Box width="100%" maxWidth="100%" px="10px">
         <HorizontalScrollbar
           data={bodyParts}
           bodyPart={bodyPart}
           setBodyPart={setBodyPart}
+          isBodyParts
         />
       </Box>
-    </>
+    </Stack>
   );
 };
 

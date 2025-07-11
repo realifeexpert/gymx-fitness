@@ -1,39 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box } from "@mui/material";
+
 import HeroBanner from "../components/HeroBanner";
 import SearchExercises from "../components/SearchExercises";
 import Exercises from "../components/Exercises";
-import { exerciseOptions, fetchData } from "../utils/fetchData";
 
 const Home = () => {
   const [exercises, setExercises] = useState([]);
   const [bodyPart, setBodyPart] = useState("all");
 
-  useEffect(() => {
-    const fetchExercisesByBodyPart = async () => {
-      let exercisesData = [];
-      
-      if (bodyPart === 'all') {
-        exercisesData = await fetchData(
-          'https://exercisedb.p.rapidapi.com/exercises', 
-          exerciseOptions
-        );
-      } else {
-        exercisesData = await fetchData(
-          `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`, 
-          exerciseOptions
-        );
-      }
-      
-      setExercises(exercisesData);
-    };
-
-    fetchExercisesByBodyPart();
-  }, [bodyPart]);
-
   return (
-    <Box>
+    <Box
+      sx={{
+        width: "100%",
+        mt: { lg: "50px", xs: "20px" },
+        px: { lg: "40px", md: "30px", sm: "20px", xs: "16px" },
+        pb: { lg: "80px", xs: "40px" },
+        boxSizing: "border-box",
+      }}
+    >
       <HeroBanner />
+
       <SearchExercises
         setExercises={setExercises}
         bodyPart={bodyPart}
