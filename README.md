@@ -1,78 +1,119 @@
-<<<<<<< HEAD
+# 🏋️‍♂️ GymX – Modern Fitness Web App
 
-# Getting Started with Create React App
+**GymX** is a responsive and feature-rich fitness web application built using **React.js**. It helps users discover and explore over **1,000+ exercises** categorized by body part, muscle group, and equipment type. Each exercise is supported by related **YouTube tutorial videos** to guide proper form and technique.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The app integrates data using **ExerciseDB API** and **YouTube Search & Download API**, both accessed via **RapidAPI**.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## ⚙️ Tech Stack
 
-### `npm start`
+- **React.js** – Component-based UI development
+- **Material UI (MUI)** – Prebuilt responsive UI components
+- **React Router Dom** – Navigation and routing
+- **ExerciseDB API** _(via RapidAPI)_ – Exercise data (muscle, equipment, etc.)
+- **YouTube Search API** _(via RapidAPI)_ – Embedded workout video suggestions
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## ✅ Key Features
 
-### `npm test`
+- 🔍 **Smart Search** – Find exercises by keyword, body part, target muscle, or equipment
+- 🧠 **Categorized Filtering** – Select from body parts with smooth horizontal scrolling
+- 🎥 **YouTube Video Integration** – View instructional videos for every exercise
+- 🧩 **Similar Exercises** – Based on muscle groups and equipment
+- 📱 **Fully Responsive UI** – Works seamlessly on mobile, tablet, and desktop
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🚀 Getting Started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Clone the repository**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   git clone https://github.com/MauryaShiva/GymX-Fitness-App.git
+   cd GymX-Fitness-App
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Install dependencies**
 
-### `npm run eject`
+   ```bash
+   npm install
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. **Add your RapidAPI credentials** in `src/utils/fetchData.js`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. **Run the app**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   ```bash
+   npm start
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 📁 Folder Structure
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+GymX-Fitness-App/
+├── public/                      # Static assets (index.html, favicon, etc.)
+│
+├── src/
+│   ├── assets/                  # Images, icons, and static files
+│   │   ├── images/              # Hero banner and exercise images
+│   │   └── icons/               # Arrow icons or SVGs
+│   │
+│   ├── components/              # Reusable components
+│   │   ├── BodyPart.js
+│   │   ├── Detail.js
+│   │   ├── ExerciseCard.js
+│   │   ├── ExerciseVideos.js
+│   │   ├── Footer.js
+│   │   ├── HeroBanner.js
+│   │   ├── HorizontalScrollbar.js
+│   │   ├── Loader.js
+│   │   ├── Navbar.js
+│   │   ├── SearchExercises.js
+│   │   └── SimilarExercises.js   # ✅ Added here
+│   │
+│   ├── pages/                   # Page-level components
+│   │   ├── Home.js
+│   │   └── ExerciseDetails.js
+│   │
+│   ├── utils/                   # API functions and helpers
+│   │   └── fetchData.js
+│   │
+│   ├── App.js                   # Root app component with routing
+│   ├── index.js                 # Entry point (ReactDOM)
+│   └── App.css                  # Global styles
+│
+├── .env                         # API keys (not committed to Git)
+├── .gitignore                   # Git ignored files
+├── package.json                 # Project metadata and dependencies
+├── package-lock.json            # Exact version lock for installed npm packages
+├── README.md                    # Project documentation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+📸 Screenshot
 
-### Analyzing the Bundle Size
+<img width="1918" height="902" alt="image" src="https://github.com/user-attachments/assets/56389c48-213b-4a82-a848-bc8f176e951f" />
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 🔌 API Sources
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- **[ExerciseDB API](https://rapidapi.com/justin-WFnsXH_t6/api/exercisedb)** – Over 10,000+ exercises with details like muscle, equipment, etc.
+- **[YouTube Search & Download API](https://rapidapi.com/h0p3rwe/api/youtube-search-and-download)** – For fetching exercise videos by name
+- **[RapidAPI](https://rapidapi.com/)** – The world’s largest API hub used to access and manage both ExerciseDB and YouTube APIs.
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 🌐 Live Demo
 
-### Deployment
+👉 [Live App on Netlify](https://gymx-fitness-app.netlify.app/)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-# This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-# GymX-Fitness-App
-
-GymX-Fitness-App is a responsive React app using ExerciseDB via RapidAPI and YouTube API. Search 1000+ exercises by body part, equipment, or target muscle. View related workout videos, explore with horizontal scroll, and enjoy a sleek Material UI-powered interface.
-
-> > > > > > > 82ff8d7008be9e4af5255303ef3c3244345fb4fe
+Explore the live version of **GymX – Modern Fitness Web App**, fully deployed on **Netlify**.  
+Browse exercises, search by muscle group, watch YouTube tutorials, and experience a smooth, responsive UI across all devices — mobile, tablet, and desktop.  
+No setup required — just click and start your fitness journey!
