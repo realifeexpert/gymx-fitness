@@ -19,11 +19,25 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
 
   useEffect(() => {
     const fetchBodyParts = async () => {
-      const bodyPartsData = await fetchData(
-        "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
-        exerciseOptions
-      );
-      setBodyParts(["all", ...bodyPartsData]);
+      try {
+        const bodyPartsData = await fetchData(
+          "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
+          exerciseOptions
+        ); // ✅ FIX: Check if the returned data is actually an array before using it
+
+        if (Array.isArray(bodyPartsData)) {
+          setBodyParts(["all", ...bodyPartsData]);
+        } else {
+          // Log an error if the API response is not what we expect
+          console.error(
+            "API response for body parts is not an array:",
+            bodyPartsData
+          );
+        }
+      } catch (error) {
+        // Catch any network errors during the fetch itself
+        console.error("Failed to fetch body parts list:", error);
+      }
     };
 
     fetchBodyParts();
@@ -60,6 +74,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
         width: "100%",
       }}
     >
+           {" "}
       <Typography
         fontWeight={700}
         textAlign="center"
@@ -69,11 +84,10 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
           lineHeight: 1.3,
         }}
       >
-        Find Your Perfect Workout
-        <br />
-        <span style={{ color: "#FF2625" }}>Right Now</span>
+                Find Your Perfect Workout         <br />       {" "}
+        <span style={{ color: "#FF2625" }}>Right Now</span>     {" "}
       </Typography>
-
+           {" "}
       <Box
         position="relative"
         width="100%"
@@ -81,6 +95,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
         mb={isMobile ? "40px" : "60px"}
         px={isMobile ? 0 : 1}
       >
+               {" "}
         <TextField
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -110,7 +125,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
             },
           }}
         />
-
+               {" "}
         <Button
           onClick={handleSearch}
           sx={{
@@ -132,18 +147,22 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
             },
           }}
         >
-          Search
+                    Search        {" "}
         </Button>
+             {" "}
       </Box>
-
+           {" "}
       <Box width="100%" maxWidth="100%" px="10px">
+               {" "}
         <HorizontalScrollbar
           data={bodyParts}
           bodyPart={bodyPart}
           setBodyPart={setBodyPart}
           isBodyParts
         />
+             {" "}
       </Box>
+         {" "}
     </Stack>
   );
 };
