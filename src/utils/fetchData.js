@@ -1,23 +1,22 @@
-// src/utils/fetchData.js
-
-export const exerciseOptions = {
-  method: "GET",
-  headers: {
-    "x-rapidapi-host": "exercisedb.p.rapidapi.com",
-    "x-rapidapi-key": process.env.REACT_APP_RAPIDAPI_KEY,
-  },
-};
+// This file should contain the options for the YouTube API
 
 export const youtubeOptions = {
   method: "GET",
   headers: {
+    // ✅ Use Vite's 'import.meta.env' instead of 'process.env'
+    "X-RapidAPI-Key": import.meta.env.VITE_RAPIDAPI_KEY,
     "X-RapidAPI-Host": "youtube-search-and-download.p.rapidapi.com",
-    "X-RapidAPI-Key": process.env.REACT_APP_RAPIDAPI_KEY,
   },
 };
 
+// This is our reusable function for all API calls
 export const fetchData = async (url, options) => {
-  const response = await fetch(url, options);
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Fetch Error:", error);
+    return { error: "Failed to fetch data" };
+  }
 };

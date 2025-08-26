@@ -1,0 +1,77 @@
+import React from "react";
+import { Typography, Stack, Button } from "@mui/material";
+
+import BodyPartImage from "../assets/icons/body-part.png";
+import TargetImage from "../assets/icons/target.png";
+import EquipmentImage from "../assets/icons/equipment.png";
+
+const Detail = ({ exerciseDetail }) => {
+  const { bodyParts, gifUrl, name, targetMuscles, equipments } = exerciseDetail;
+
+  if (!bodyParts || !targetMuscles || !equipments) {
+    return "Loading details...";
+  }
+
+  const extraDetail = [
+    { icon: BodyPartImage, name: bodyParts[0] },
+    { icon: TargetImage, name: targetMuscles[0] },
+    { icon: EquipmentImage, name: equipments[0] },
+  ];
+
+  return (
+    // ✅ Reduced the main gap between the image and the text
+    <Stack
+      gap="40px"
+      sx={{ flexDirection: { lg: "row" }, p: "20px", alignItems: "center" }}
+    >
+      <img src={gifUrl} alt={name} loading="lazy" className="detail-image" />
+
+      {/* ✅ Reduced the gap between the text elements */}
+      <Stack sx={{ gap: { lg: "25px", xs: "20px" } }}>
+        <Typography
+          sx={{ fontSize: { lg: "50px", xs: "30px" } }}
+          fontWeight={700}
+          textTransform="capitalize"
+        >
+          {name}
+        </Typography>
+        <Typography
+          sx={{ fontSize: { lg: "20px", xs: "16px" } }}
+          color="#4F4C4C"
+        >
+          Exercises keep you strong.{" "}
+          <span style={{ textTransform: "capitalize" }}>{name}</span> is one of
+          the best exercises to target your {targetMuscles[0]}. It will help you
+          improve your mood and gain energy.
+        </Typography>
+        {extraDetail.map((item) => (
+          <Stack key={item.name} direction="row" gap="24px" alignItems="center">
+            {/* ✅ Made the icon buttons smaller */}
+            <Button
+              sx={{
+                background: "#FFF2DB",
+                borderRadius: "50%",
+                width: "80px",
+                height: "80px",
+              }}
+            >
+              <img
+                src={item.icon}
+                alt={item.name}
+                style={{ width: "45px", height: "45px" }}
+              />
+            </Button>
+            <Typography
+              textTransform="capitalize"
+              sx={{ fontSize: { lg: "24px", xs: "18px" } }}
+            >
+              {item.name}
+            </Typography>
+          </Stack>
+        ))}
+      </Stack>
+    </Stack>
+  );
+};
+
+export default Detail;

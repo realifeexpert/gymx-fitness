@@ -74,8 +74,8 @@ html {
 
 /* ✅ DETAIL IMAGE */
 .detail-image {
-  width: 729px;
-  height: 742px;
+  width: 500px;
+  height: 500px;
   object-fit: contain;
 }
 
@@ -178,4 +178,3 @@ body {
   width: 100%;
   overflow-x: hidden;
 }
-
