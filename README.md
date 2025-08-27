@@ -25,9 +25,79 @@ A modern and responsive fitness application built with React, Vite, and Tailwind
 - **Routing:** React Router DOM
 - **Animations:** Framer Motion
 - **Icons:** Lucide React
-- **Data:** [Open-Source ExerciseDB v1](https://testings-nine.vercel.app) & YouTube Search API from RapidAPI
 
 ---
+
+Of course. You are right, the `README` should be specifically for your open-source API project and explain its usage limits.
+
+Here is a complete, professional `README.md` file for your API's GitHub repository. It explains what the API does, how to use it, and includes the important note about the Vercel free plan.
+
+---
+
+# ExerciseDB API - v1 (Open Source)
+
+A free, public, and open-source REST API for fitness exercises, featuring over 1,300 structured exercises with animated GIF-based visual media.
+
+This project provides a clean, developer-friendly interface to a comprehensive exercise dataset, perfect for personal projects, learning, and building community-driven fitness applications.
+
+**Live API Base URL:** `https://testings-nine.vercel.app`
+
+---
+
+## ⚠️ Important Usage Notice
+
+This API is hosted on a **Vercel Hobby Plan**, which is free but has usage limits (e.g., 100 GB-hours/month of serverless function execution).
+
+It is intended for **demonstration, personal projects, and non-commercial use**.
+
+If you plan to use this API in a production application or expect high traffic, it is strongly recommended that you **fork this repository and deploy your own instance**. This will give you your own usage quota and ensure the stability of your application.
+
+---
+
+## API Endpoints
+
+Here are some of the main endpoints available.
+
+### Get All Exercises
+
+Retrieves a paginated list of all exercises.
+
+- **Endpoint:** `GET /api/v1/exercises`
+- **Query Params:** `limit` (default: 10, max: 100), `offset` (default: 0)
+- **Example:** `https://testings-nine.vercel.app/api/v1/exercises?limit=5`
+
+### Get Exercises by Body Part
+
+Retrieves all exercises for a specific body part.
+
+- **Endpoint:** `GET /api/v1/bodyparts/{bodyPartName}/exercises`
+- **Example:** `https://testings-nine.vercel.app/api/v1/bodyparts/chest/exercises`
+
+### Get a Single Exercise by ID
+
+Retrieves the details for a single exercise.
+
+- **Endpoint:** `GET /api/v1/exercises/{exerciseId}`
+- **Example:** `https://testings-nine.vercel.app/api/v1/exercises/VPPtuSI`
+
+---
+
+## Data Structure
+
+Each exercise object in the response follows this structure:
+
+```json
+{
+  "exerciseId": "string",
+  "name": "string",
+  "gifUrl": "string (link to animated GIF)",
+  "targetMuscles": ["string"],
+  "bodyParts": ["string"],
+  "equipments": ["string"],
+  "secondaryMuscles": ["string"],
+  "instructions": ["string"]
+}
+```
 
 ## Getting Started
 
