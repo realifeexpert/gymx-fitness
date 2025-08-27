@@ -1,38 +1,57 @@
 import React, { useState } from "react";
-import { Box } from "@mui/material";
+import { motion } from "framer-motion"; // ✅ Import motion for animations
 
-import HeroBanner from "../components/HeroBanner";
-import SearchExercises from "../components/SearchExercises";
-import Exercises from "../components/Exercises";
+import HeroBanner from "../components/HeroBanner.jsx";
+import SearchExercises from "../components/SearchExercises.jsx";
+import Exercises from "../components/Exercises.jsx";
+
+// Animation variants for sections to fade in as they're scrolled to
+const sectionVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
 
 const Home = () => {
   const [exercises, setExercises] = useState([]);
   const [bodyPart, setBodyPart] = useState("all");
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        mt: { lg: "50px", xs: "20px" },
-        px: { lg: "40px", md: "30px", sm: "20px", xs: "16px" },
-        pb: { lg: "80px", xs: "40px" },
-        boxSizing: "border-box",
-      }}
-    >
+    // ✅ Replaced the MUI <Box> with a simple div or fragment
+    // Spacing is now handled by the components themselves for better control
+    <div>
       <HeroBanner />
 
-      <SearchExercises
-        setExercises={setExercises}
-        bodyPart={bodyPart}
-        setBodyPart={setBodyPart}
-      />
+      {/* ✅ Each section is wrapped in a motion.div for scroll-triggered animations */}
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <SearchExercises
+          setExercises={setExercises}
+          bodyPart={bodyPart}
+          setBodyPart={setBodyPart}
+        />
+      </motion.div>
 
-      <Exercises
-        exercises={exercises}
-        setExercises={setExercises}
-        bodyPart={bodyPart}
-      />
-    </Box>
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <Exercises
+          exercises={exercises}
+          setExercises={setExercises}
+          bodyPart={bodyPart}
+        />
+      </motion.div>
+    </div>
   );
 };
 

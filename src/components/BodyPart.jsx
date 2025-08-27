@@ -1,69 +1,53 @@
 import React from "react";
-import { Stack, Typography } from "@mui/material";
+import { motion } from "framer-motion";
 import Icon from "../assets/icons/gym.png";
 
 const BodyPart = ({ item, bodyPart, setBodyPart }) => {
   const isSelected = bodyPart === item;
 
   return (
-    <Stack
-      component="button"
-      alignItems="center"
-      justifyContent="center"
-      className="bodyPart-card"
-      sx={{
-        borderTop: isSelected ? "4px solid #FF2625" : "none",
-        backgroundColor: "#fff",
-        borderRadius: "20px",
-        width: "280px", // ✅ Fixed size like YouTube thumbnails
-        height: "280px", // ✅ Same across devices
-        cursor: "pointer",
-        gap: "20px",
-        outline: "none",
-        border: "none",
-        transition: "all 0.3s ease",
-        boxShadow: isSelected ? "0px 4px 20px rgba(255, 38, 37, 0.3)" : "none",
-
-        "&:hover": {
-          transform: "scale(1.04)",
-          boxShadow: "0px 6px 20px rgba(0, 0, 0, 0.1)",
-        },
-
-        "@media (max-width: 480px)": {
-          width: "240px",
-          height: "240px",
-        },
-      }}
+    <motion.div
+      className={`
+        group w-52 h-56 flex flex-col rounded-xl cursor-pointer bg-white 
+        shadow-lg border-b-8 transform transition-all duration-300
+        hover:scale-105 hover:-translate-y-2
+        ${
+          isSelected ? "border-red-500" : "border-gray-200 hover:border-red-200"
+        }
+      `}
       onClick={() => {
         setBodyPart(item);
-        window.scrollTo({ top: 1800, behavior: "smooth" });
+
+        // ✅ The updated dynamic scroll logic
+        // This finds the results section and scrolls to it.
+        const exercisesSection = document.getElementById("exercises");
+        if (exercisesSection) {
+          exercisesSection.scrollIntoView({ behavior: "smooth" });
+        }
       }}
+      whileTap={{ scale: 0.98 }}
     >
-      <img
-        src={Icon}
-        alt={`${item} icon`}
-        style={{
-          width: "50px",
-          height: "50px",
-          objectFit: "contain",
-        }}
-      />
-      <Typography
-        fontSize="20px"
-        fontWeight="bold"
-        color="#3A1212"
-        textTransform="capitalize"
-        textAlign="center"
-        px="10px"
-        sx={{
-          overflowWrap: "break-word",
-          maxWidth: "90%",
-          lineHeight: 1.2,
-        }}
-      >
-        {item}
-      </Typography>
-    </Stack>
+      <div className="flex flex-col items-center justify-center h-full gap-5 p-4">
+        <img
+          src={Icon}
+          alt={`${item} icon`}
+          className="w-12 h-12 transition-transform duration-300 group-hover:scale-110"
+        />
+        <span
+          className={`
+            text-2xl font-semibold capitalize tracking-wide
+            transition-colors duration-300
+            ${
+              isSelected
+                ? "text-red-500"
+                : "text-zinc-800 group-hover:text-red-500"
+            }
+          `}
+        >
+          {item}
+        </span>
+      </div>
+    </motion.div>
   );
 };
 

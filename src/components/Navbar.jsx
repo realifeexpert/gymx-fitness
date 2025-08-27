@@ -1,72 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Stack, useMediaQuery } from "@mui/material";
 import Logo from "../assets/images/Logo.png";
 
 const Navbar = () => {
-  const isMobile = useMediaQuery("(max-width:600px)");
-
   return (
-    <Stack
-      direction="row"
-      justifyContent="space-between"
-      alignItems="center"
-      sx={{
-        px: { xs: 2, sm: 4, md: 6 },
-        py: { xs: 1.5, sm: 2 },
-        backgroundColor: "#fff",
-        boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.05)",
-        position: "fixed", // ✨ makes navbar sticky without jumpiness
-        top: 0,
-        width: "100%",
-        zIndex: 1000,
-      }}
-    >
+    // Replaced <Stack> with a <nav> for better semantics and applied Tailwind classes
+    <nav className="fixed top-0 z-50 w-full bg-white px-4 sm:px-8 md:px-12 py-3 sm:py-4 flex items-center justify-between shadow-md">
       {/* Logo */}
-      <Link to="/" style={{ display: "flex", alignItems: "center" }}>
-        <img
-          src={Logo}
-          alt="GymX Logo"
-          style={{
-            width: isMobile ? "36px" : "48px",
-            height: isMobile ? "36px" : "48px",
-          }}
-        />
+      <Link to="/" className="flex items-center">
+        {/* Responsive logo size using Tailwind's sm: prefix */}
+        <img src={Logo} alt="GymX Logo" className="w-9 h-9 sm:w-12 sm:h-12" />
       </Link>
 
       {/* Navigation Links */}
-      <Stack
-        direction="row"
-        gap={isMobile ? "18px" : "36px"}
-        alignItems="center"
-        sx={{
-          fontSize: isMobile ? "16px" : "20px",
-          fontFamily: "Alegreya",
-        }}
-      >
+      {/* Responsive gap and font size */}
+      <div className="flex items-center gap-4 sm:gap-8 text-base sm:text-lg">
         <Link
           to="/"
-          style={{
-            textDecoration: "none",
-            color: "#3A1212",
-            borderBottom: "3px solid #FF2625",
-            paddingBottom: "4px",
-          }}
+          // Converted inline styles to Tailwind classes
+          className="no-underline text-[#3A1212] border-b-2 border-red-500 pb-1 font-semibold transition hover:text-red-500"
         >
           Home
         </Link>
         <a
           href="#exercises"
-          style={{
-            textDecoration: "none",
-            color: "#3A1212",
-            paddingBottom: "4px",
-          }}
+          className="no-underline text-[#3A1212] pb-1 font-semibold transition hover:text-red-500"
         >
           Exercises
         </a>
-      </Stack>
-    </Stack>
+      </div>
+    </nav>
   );
 };
 

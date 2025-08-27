@@ -1,78 +1,51 @@
 import React, { useContext } from "react";
-import { Box } from "@mui/material";
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import "react-horizontal-scrolling-menu/dist/styles.css";
 
-import BodyPart from "./BodyPart";
-import ExerciseCard from "./ExerciseCard";
+import BodyPart from "./BodyPart.jsx";
+import ExerciseCard from "./ExerciseCard.jsx";
 import RightArrowIcon from "../assets/icons/right-arrow.png";
 import LeftArrowIcon from "../assets/icons/left-arrow.png";
 
-// 🔹 Left Arrow
 const LeftArrow = () => {
   const { scrollPrev } = useContext(VisibilityContext);
-
   return (
-    <Box
+    <div
       onClick={() => scrollPrev()}
-      sx={{
-        cursor: "pointer",
-        px: 1.5,
-        display: "flex",
-        alignItems: "center",
-        zIndex: 1,
-      }}
+      className="p-4 cursor-pointer flex items-center z-10"
     >
-      <img src={LeftArrowIcon} alt="left-arrow" style={{ width: "24px" }} />
-    </Box>
+      <img src={LeftArrowIcon} alt="left-arrow" className="w-6 h-6" />
+    </div>
   );
 };
 
-// 🔹 Right Arrow
 const RightArrow = () => {
   const { scrollNext } = useContext(VisibilityContext);
-
   return (
-    <Box
+    <div
       onClick={() => scrollNext()}
-      sx={{
-        cursor: "pointer",
-        px: 1.5,
-        display: "flex",
-        alignItems: "center",
-        zIndex: 1,
-      }}
+      className="p-4 cursor-pointer flex items-center z-10"
     >
-      <img src={RightArrowIcon} alt="right-arrow" style={{ width: "24px" }} />
-    </Box>
+      <img src={RightArrowIcon} alt="right-arrow" className="w-6 h-6" />
+    </div>
   );
 };
 
-// 🔹 Scrollable Component
 const HorizontalScrollbar = ({ data, bodyPart, setBodyPart, isBodyParts }) => {
   return (
-    <Box
-      sx={{
-        width: "100%",
-        overflow: "hidden",
-        position: "relative",
-        py: "10px",
-      }}
-    >
+    <div className="w-full overflow-hidden relative py-2">
       <ScrollMenu
-        LeftArrow={<LeftArrow />}
-        RightArrow={<RightArrow />}
-        wrapperClassName="scroll-wrapper"
+        LeftArrow={LeftArrow}
+        RightArrow={RightArrow}
+        // ✅ Apply the new class to the wrapper
+        wrapperClassName="hide-scrollbar"
       >
         {data.map((item) => (
-          <Box
-            key={item.id || item}
-            itemID={item.id || item}
-            title={item.id || item}
-            sx={{
-              m: "0 10px",
-              display: "inline-block",
-            }}
+          <div
+            key={item.id || item.exerciseId || item}
+            itemID={item.id || item.exerciseId || item} // itemID is required by the library
+            title={item.id || item.exerciseId || item}
+            className="mx-5" // Use margin for spacing between items
           >
             {isBodyParts ? (
               <BodyPart
@@ -81,12 +54,12 @@ const HorizontalScrollbar = ({ data, bodyPart, setBodyPart, isBodyParts }) => {
                 setBodyPart={setBodyPart}
               />
             ) : (
-              <ExerciseCard exercise={item} />
+              <ExerciseCard exercise={item} size="small" />
             )}
-          </Box>
+          </div>
         ))}
       </ScrollMenu>
-    </Box>
+    </div>
   );
 };
 

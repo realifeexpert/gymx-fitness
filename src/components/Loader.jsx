@@ -1,31 +1,28 @@
 import React from "react";
-import { Stack, useMediaQuery } from "@mui/material";
 
 const Loader = ({ fullScreen = true }) => {
-  const isMobile = useMediaQuery("(max-width:600px)");
+  // We define the conditional styles based on the fullScreen prop
+  const containerClasses = fullScreen
+    ? "h-screen bg-white"
+    : "h-[300px] bg-transparent";
 
   return (
-    <Stack
-      direction="row"
-      justifyContent="center"
-      alignItems="center"
-      width="100%"
-      height={fullScreen ? "100vh" : "300px"}
-      sx={{
-        backgroundColor: fullScreen ? "#fff" : "transparent",
-        transition: "all 0.3s ease-in-out",
-      }}
+    // Replaced <Stack> with a div and applied Tailwind classes
+    <div
+      className={`
+        w-full flex items-center justify-center 
+        transition-all duration-300 ease-in-out
+        ${containerClasses} 
+      `}
     >
       <img
         src="https://www.svgrepo.com/show/303626/loader.svg"
         alt="Loading animation"
         aria-label="Loading..."
-        style={{
-          width: isMobile ? "100px" : "160px",
-          height: isMobile ? "100px" : "160px",
-        }}
+        // ✅ Replaced the inline style with responsive Tailwind classes
+        className="w-24 h-24 sm:w-40 sm:h-40"
       />
-    </Stack>
+    </div>
   );
 };
 

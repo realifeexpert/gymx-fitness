@@ -1,83 +1,41 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Button, Stack, Typography } from "@mui/material";
+
+// We no longer need any imports from @mui/material
+// const { Box, Button, Stack, Typography } = from "@mui/material";
 
 const ExerciseCard = ({ exercise }) => {
   return (
     <Link
       to={`/exercise/${exercise.exerciseId}`}
-      className="exercise-card"
-      style={{
-        width: "350px", // ✅ Set a fixed width for the card
-        textDecoration: "none",
-        background: "#fff",
-        borderTop: "4px solid #FF2625",
-        borderBottomLeftRadius: "20px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        paddingBottom: "10px",
-        transition: "transform 0.3s ease-in-out",
-        cursor: "pointer",
-      }}
+      // ✅ Replaced the inline style object with Tailwind classes
+      className="bg-white border-t-4 border-red-500 rounded-bl-2xl flex flex-col justify-between pb-3 transition-transform duration-300 ease-in-out hover:scale-105 cursor-pointer w-[350px] shadow-lg"
     >
-      {/* ✅ Replaced <img> with MUI Box for better styling control */}
-      <Box
-        component="img"
+      {/* Replaced MUI <Box> with a standard <img> tag */}
+      <img
         src={exercise.gifUrl}
         alt={exercise.name}
         loading="lazy"
-        sx={{
-          // ✅ Styles to make the image fit perfectly
-          width: "100%",
-          height: "320px",
-          objectFit: "cover", // This ensures the image covers the area without distortion
-        }}
+        className="w-full h-[320px] object-cover" // ✅ All styling is now in className
       />
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{ justifyContent: "center", mt: "20px" }}
-      >
-        <Button
-          sx={{
-            color: "#fff",
-            background: "#FFA9A9",
-            fontSize: "14px",
-            borderRadius: "20px",
-            textTransform: "capitalize",
-            padding: "5px 15px",
-          }}
-        >
+
+      {/* Replaced MUI <Stack> with a flex div */}
+      <div className="flex flex-row gap-2 justify-center mt-5">
+        {/* Replaced MUI <Button> with a styled <span> for the tag */}
+        <span className="text-white bg-[#FFA9A9] text-sm rounded-full capitalize py-1 px-4">
           {exercise.bodyParts[0]}
-        </Button>
-        <Button
-          sx={{
-            color: "#fff",
-            background: "#FCC757",
-            fontSize: "14px",
-            borderRadius: "20px",
-            textTransform: "capitalize",
-            padding: "5px 15px",
-          }}
-        >
+        </span>
+
+        {/* Replaced MUI <Button> with a styled <span> for the tag */}
+        <span className="text-white bg-[#FCC757] text-sm rounded-full capitalize py-1 px-4">
           {exercise.targetMuscles[0]}
-        </Button>
-      </Stack>
-      <Typography
-        sx={{
-          padding: "0 20px",
-          color: "#000",
-          fontWeight: "bold",
-          mt: "11px",
-          pb: "10px",
-          textTransform: "capitalize",
-          fontSize: "22px",
-          textAlign: "center",
-        }}
-      >
+        </span>
+      </div>
+
+      {/* Replaced MUI <Typography> with an <h3> tag */}
+      <h3 className="px-5 text-black font-bold mt-3 pb-2.5 capitalize text-xl text-center">
         {exercise.name}
-      </Typography>
+      </h3>
     </Link>
   );
 };

@@ -1,7 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Stack, TextField, Typography } from "@mui/material";
-import { fetchData } from "../utils/fetchData"; // We only need fetchData
-import HorizontalScrollbar from "./HorizontalScrollbar";
+import { fetchData } from "../utils/fetchData";
+import HorizontalScrollbar from "./HorizontalScrollbar.jsx";
+
+// A simple Search Icon component for our new input field
+const SearchIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-6 w-6"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+    />
+  </svg>
+);
 
 const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
   const [search, setSearch] = useState("");
@@ -12,14 +29,11 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
       const bodyPartsResponse = await fetchData(
         "https://testings-nine.vercel.app/api/v1/bodyparts"
       );
-
-      // The API returns an array of objects like { name: 'chest' }, so we extract the names
       if (bodyPartsResponse.success && Array.isArray(bodyPartsResponse.data)) {
         const bodyPartNames = bodyPartsResponse.data.map((item) => item.name);
         setBodyParts(["all", ...bodyPartNames]);
       }
     };
-
     fetchBodyPartsData();
   }, []);
 
@@ -27,66 +41,56 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
     if (search) {
       const searchUrl = `https://testings-nine.vercel.app/api/v1/exercises/search?q=${search.toLowerCase()}`;
       const exercisesResponse = await fetchData(searchUrl);
-
       if (exercisesResponse.success && Array.isArray(exercisesResponse.data)) {
         setExercises(exercisesResponse.data);
       }
-
       setSearch("");
       window.scrollTo({ top: 1800, behavior: "smooth" });
     }
   };
 
   return (
-    <Stack alignItems="center" mt="37px" justifyContent="center" p="20px">
-      <Typography
-        fontWeight={700}
-        sx={{ fontSize: { lg: "44px", xs: "30px" } }}
-        mb="49px"
-        textAlign="center"
-      >
-        Awesome Exercises You <br /> Should Know
-      </Typography>
-      <Box position="relative" mb="72px">
-        <TextField
-          height="76px"
-          sx={{
-            input: { fontWeight: "700", border: "none", borderRadius: "4px" },
-            width: { lg: "1170px", xs: "350px" },
-            backgroundColor: "#fff",
-            borderRadius: "40px",
-          }}
+    // ✅ Main container with modern spacing
+    <section className="flex flex-col items-center mt-12 p-5 text-center">
+      {/* ✅ More impactful heading with a subtle text gradient */}
+      <h2 className="text-4xl lg:text-5xl font-extrabold mb-12 text-white">
+        Find Your Perfect Workout, <br />
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+          Right Now
+        </span>
+      </h2>
+
+      {/* ✅ Modern, restyled search bar */}
+      <div className="relative w-full max-w-3xl mb-16">
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+          <SearchIcon />
+        </div>
+        <input
+          className="w-full h-16 bg-surface text-text-primary placeholder-gray-500 border border-gray-700 rounded-full py-2 pl-14 pr-40 text-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300"
           value={search}
-          onChange={(e) => setSearch(e.target.value.toLowerCase())}
-          placeholder="Search Exercises"
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search by name, muscle, or equipment..."
           type="text"
+          onKeyPress={(e) => e.key === "Enter" && handleSearch()}
         />
-        <Button
-          className="search-btn"
-          sx={{
-            bgcolor: "#FF2625",
-            color: "#fff",
-            textTransform: "none",
-            width: { lg: "173px", xs: "80px" },
-            height: "56px",
-            position: "absolute",
-            right: "0px",
-            fontSize: { lg: "20px", xs: "14px" },
-          }}
+        <button
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary text-background font-bold h-12 px-8 rounded-full text-lg hover:bg-opacity-80 transition-all duration-300"
           onClick={handleSearch}
         >
           Search
-        </Button>
-      </Box>
-      <Box sx={{ position: "relative", width: "100%", p: "20px" }}>
+        </button>
+      </div>
+
+      {/* ✅ Body part scroller remains, now on our dark theme */}
+      <div className="relative w-full">
         <HorizontalScrollbar
           data={bodyParts}
           bodyPart={bodyPart}
           setBodyPart={setBodyPart}
           isBodyParts
         />
-      </Box>
-    </Stack>
+      </div>
+    </section>
   );
 };
 

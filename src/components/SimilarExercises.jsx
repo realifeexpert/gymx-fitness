@@ -1,78 +1,58 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
-import ExerciseCard from "./ExerciseCard";
-import Loader from "./Loader";
+import { motion } from "framer-motion";
+import Loader from "./Loader.jsx";
+import ExerciseCard from "./ExerciseCard.jsx";
 
-// 🔹 Scrollable Horizontal Exercise List
 const HorizontalScrollWrapper = ({ data }) => (
-  <Box
-    sx={{
-      display: "flex",
-      overflowX: "auto",
-      gap: { xs: "16px", sm: "24px", md: "32px" },
-      scrollBehavior: "smooth",
-      paddingBottom: "10px",
-      px: { xs: "5px", sm: "10px" },
-      "&::-webkit-scrollbar": {
-        display: "none",
-      },
-    }}
-  >
+  <div className="flex overflow-x-auto gap-4 md:gap-8 pb-4 px-2">
     {data.slice(0, 10).map((exercise) => (
-      <Box
-        key={exercise.id}
-        sx={{
-          minWidth: { xs: "260px", sm: "300px", md: "330px" },
-          flexShrink: 0,
-        }}
+      <div
+        key={exercise.exerciseId}
+        className="min-w-[300px] sm:min-w-[320px] flex-shrink-0"
       >
-        <ExerciseCard exercise={exercise} />
-      </Box>
+        <ExerciseCard exercise={exercise} size="small" />
+      </div>
     ))}
-  </Box>
+  </div>
 );
 
-// 🔹 Main Component
 const SimilarExercises = ({ targetMuscleExercises, equipmentExercises }) => {
   return (
-    <Box mt={{ lg: "100px", xs: "50px" }} px="20px">
-      {/* 🧠 Target Muscle Group */}
-      <Typography
-        variant="h4"
-        fontWeight={700}
-        mb="30px"
-        textAlign="center"
-        fontSize={{ xs: "26px", sm: "32px" }}
-      >
+    <motion.section
+      className="mt-12 lg:mt-24 px-5"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6 }}
+    >
+      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-gray-800">
         Exercises that target the same{" "}
-        <span style={{ color: "#FF2625" }}>muscle group</span>
-      </Typography>
+        <span className="text-red-500 capitalize">muscle group</span>
+      </h2>
 
-      {targetMuscleExercises?.length ? (
-        <HorizontalScrollWrapper data={targetMuscleExercises} />
-      ) : (
-        <Loader />
-      )}
+      {/* ✅ Added a div with margin-top to create space */}
+      <div className="mt-8">
+        {targetMuscleExercises.length ? (
+          <HorizontalScrollWrapper data={targetMuscleExercises} />
+        ) : (
+          <Loader />
+        )}
+      </div>
 
-      {/* 🏋️‍♂️ Equipment Based */}
-      <Typography
-        variant="h4"
-        fontWeight={700}
-        mt="60px"
-        mb="30px"
-        textAlign="center"
-        fontSize={{ xs: "26px", sm: "32px" }}
-      >
+      <h2 className="text-2xl sm:text-3xl font-bold text-center mt-16 mb-8 text-gray-800">
         Exercises that use the same{" "}
-        <span style={{ color: "#FF2625" }}>equipment</span>
-      </Typography>
+        <span className="text-red-500 capitalize">equipment</span>
+      </h2>
 
-      {equipmentExercises?.length ? (
-        <HorizontalScrollWrapper data={equipmentExercises} />
-      ) : (
-        <Loader />
-      )}
-    </Box>
+      {/* ✅ Added a div with margin-top to create space */}
+      <div className="mt-8">
+        {equipmentExercises.length ? (
+          <HorizontalScrollWrapper data={equipmentExercises} />
+        ) : (
+          <Loader />
+        )}
+      </div>
+    </motion.section>
   );
 };
 
