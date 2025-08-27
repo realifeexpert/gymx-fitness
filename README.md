@@ -28,19 +28,13 @@ A modern and responsive fitness application built with React, Vite, and Tailwind
 
 ---
 
-Of course. You are right, the `README` should be specifically for your open-source API project and explain its usage limits.
-
-Here is a complete, professional `README.md` file for your API's GitHub repository. It explains what the API does, how to use it, and includes the important note about the Vercel free plan.
-
----
-
 # ExerciseDB API - v1 (Open Source)
 
 A free, public, and open-source REST API for fitness exercises, featuring over 1,300 structured exercises with animated GIF-based visual media.
 
 This project provides a clean, developer-friendly interface to a comprehensive exercise dataset, perfect for personal projects, learning, and building community-driven fitness applications.
 
-**Live API Base URL:** `https://testings-nine.vercel.app`
+**Live API Base URL:** (https://testings-nine.vercel.app)
 
 ---
 
