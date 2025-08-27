@@ -1,38 +1,42 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { Box, Container } from "@mui/material";
 
+// Import the CSS file which should contain your Tailwind directives
 import "./App.css";
 
+// Import your components
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import ExerciseDetail from "./pages/ExerciseDetails";
 import Footer from "./components/Footer";
+import HomeWorkouts from "./pages/HomeWorkouts.jsx";
 
 const App = () => {
   return (
-    <Box className="App" bgcolor="#fffafb">
+    // Replaced <Box> with a <div> and applied Tailwind classes.
+    // `bgcolor="#fffafb"` becomes `bg-[#fffafb]`
+    <div className="App bg-[#fffafb]">
       {/* Top Navigation */}
       <Navbar />
 
       {/* Main Content */}
-      <Container
-        maxWidth="xl"
-        sx={{
-          px: { xs: 2, md: 4 },
-          py: { xs: 2, md: 3 },
-          minHeight: "100vh",
-        }}
-      >
+      {/* Replaced <Container> with a <div> and applied Tailwind classes for max-width, padding, and min-height */}
+      {/* - maxWidth="xl" -> `max-w-7xl mx-auto` (Tailwind's equivalent for a large, centered container)
+        - sx={{ px: { xs: 2, md: 4 } }} -> `px-4 md:px-8` (Adjusted for Tailwind's spacing scale)
+        - sx={{ py: { xs: 2, md: 3 } }} -> `py-4 md:py-6` (Adjusted for Tailwind's spacing scale)
+        - sx={{ minHeight: "100vh" }} -> `min-h-screen`
+      */}
+      <main className="max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-6 min-h-screen">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/exercise/:id" element={<ExerciseDetail />} />
+          <Route path="/home-workouts" element={<HomeWorkouts />} />
         </Routes>
-      </Container>
+      </main>
 
       {/* Footer Section */}
       <Footer />
-    </Box>
+    </div>
   );
 };
 
