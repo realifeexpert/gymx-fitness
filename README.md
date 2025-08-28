@@ -1,20 +1,21 @@
 # GymX Fitness App 💪
 
-A modern and responsive fitness application built with React, Vite, and Tailwind CSS. Explore over 1,300 exercises with animated GIFs, watch detailed video tutorials, and follow a curated weekly home workout plan.
+A modern and responsive fitness application built with React, Vite, and Tailwind CSS. This app operates on a fully local dataset of over 1,300 exercises, ensuring a fast, reliable, and offline-first experience.
 
-**[Live Demo](https://gym-x-fitness-app.vercel.app)** 🚀
+**[Live Demo](https://gym-x-fitness-app.vercel.app/)** 🚀
 
 ---
 
 ## Features
 
-- ⚡️ **Fast & Modern:** Built with Vite for a lightning-fast development experience and optimized performance.
+- ⚡️ **Fully Independent & Fast:** Built with Vite and operates on a local JSON database, removing external API dependencies for core data and ensuring instant load times.
 - 🎨 **Styled with Tailwind CSS:** A fully custom, responsive, and attractive dark-themed UI designed from the ground up.
-- 🤸 **Comprehensive Exercise Database:** Browse and search an open-source database of over 1,300 exercises.
-- 🎞️ **Animated Visuals:** Each exercise is demonstrated with a clear, animated GIF.
-- 📺 **Integrated YouTube Videos:** Watch related exercise tutorials from YouTube directly within the app.
-- 📅 **Weekly Home Workout Plan:** A dedicated page with curated, full-length video workouts for each day of the week.
-- ✨ **Smooth Animations:** The entire application is polished with subtle and professional animations using Framer Motion.
+- 🧠 **Smart Autocomplete Search:** A search bar with "suggestion-only" validation, powered by Fuse.js for smart, typo-tolerant searching.
+- 🤸 **Comprehensive Exercise Database:** Browse over 1,300 exercises with filters for different body parts.
+- 🎞️ **Animated Visuals:** Each exercise is demonstrated with a clear, animated GIF hosted locally.
+- 📅 **Weekly Home Workout Plan:** A dedicated page with a curated, full-length video workout routine for each day of the week.
+- 📺 **Integrated YouTube Videos:** Watch detailed exercise tutorials from YouTube, embedded directly on the exercise detail page.
+- ✨ **Smooth Animations:** The entire application is polished with professional page transitions and component animations using Framer Motion.
 
 ---
 
@@ -23,84 +24,22 @@ A modern and responsive fitness application built with React, Vite, and Tailwind
 - **Framework:** React.js (with Vite)
 - **Styling:** Tailwind CSS
 - **Routing:** React Router DOM
+- **Fuzzy Search:** Fuse.js
 - **Animations:** Framer Motion
-- **Icons:** Lucide React
+- **Icons:** Lucide React & MUI Icons
+- **Data:** Local `exercises.json`, `bodyparts.json`, and GIF assets.
+- **APIs:** YouTube Search API (from RapidAPI) for video details.
 
 ---
-
-# ExerciseDB API - v1 (Open Source)
-
-A free, public, and open-source REST API for fitness exercises, featuring over 1,300 structured exercises with animated GIF-based visual media.
-
-This project provides a clean, developer-friendly interface to a comprehensive exercise dataset, perfect for personal projects, learning, and building community-driven fitness applications.
-
-**Live API Base URL:** (https://testings-nine.vercel.app)
-
----
-
-## ⚠️ Important Usage Notice
-
-This API is hosted on a **Vercel Hobby Plan**, which is free but has usage limits (e.g., 100 GB-hours/month of serverless function execution).
-
-It is intended for **demonstration, personal projects, and non-commercial use**.
-
-If you plan to use this API in a production application or expect high traffic, it is strongly recommended that you **fork this repository and deploy your own instance**. This will give you your own usage quota and ensure the stability of your application.
-
----
-
-## API Endpoints
-
-Here are some of the main endpoints available.
-
-### Get All Exercises
-
-Retrieves a paginated list of all exercises.
-
-- **Endpoint:** `GET /api/v1/exercises`
-- **Query Params:** `limit` (default: 10, max: 100), `offset` (default: 0)
-- **Example:** `https://testings-nine.vercel.app/api/v1/exercises?limit=5`
-
-### Get Exercises by Body Part
-
-Retrieves all exercises for a specific body part.
-
-- **Endpoint:** `GET /api/v1/bodyparts/{bodyPartName}/exercises`
-- **Example:** `https://testings-nine.vercel.app/api/v1/bodyparts/chest/exercises`
-
-### Get a Single Exercise by ID
-
-Retrieves the details for a single exercise.
-
-- **Endpoint:** `GET /api/v1/exercises/{exerciseId}`
-- **Example:** `https://testings-nine.vercel.app/api/v1/exercises/VPPtuSI`
-
----
-
-## Data Structure
-
-Each exercise object in the response follows this structure:
-
-```json
-{
-  "exerciseId": "string",
-  "name": "string",
-  "gifUrl": "string (link to animated GIF)",
-  "targetMuscles": ["string"],
-  "bodyParts": ["string"],
-  "equipments": ["string"],
-  "secondaryMuscles": ["string"],
-  "instructions": ["string"]
-}
-```
 
 ## Getting Started
 
 Follow these instructions to set up and run the project locally.
 
-### 1\. Clone the Repository
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/MauryaShiva/GymX-Fitness-App.git
+git clone [https://github.com/MauryaShiva/GymX-Fitness-App.git](https://github.com/MauryaShiva/GymX-Fitness-App.git)
 cd GymX-Fitness-App
 ```
 
@@ -114,10 +53,10 @@ pnpm install
 
 ### 3\. Set Up Environment Variables
 
-You will need an API key from RapidAPI to fetch YouTube videos.
+You will need a RapidAPI key to fetch YouTube videos.
 
 - Create a file named `.env` in the root of the project.
-- Add your RapidAPI key to this file as shown below:
+- Add your RapidAPI key to this file:
 
 <!-- end list -->
 
@@ -135,7 +74,26 @@ The application will be available at `http://localhost:5173`.
 
 ---
 
+## 🚀 Deployment
+
+This application is deployed on **Vercel**. To deploy your own version, follow these steps:
+
+1.  **Import Project:** Go to [Vercel](https://vercel.com/), sign up with your GitHub account, and import your repository.
+2.  **Configure Project:** Vercel will automatically detect that you are using Vite and will set the correct **Build & Output Settings**.
+3.  **Add Environment Variable:** In your Vercel project's **Settings -\> Environment Variables**, add your API key:
+    - **Key:** `VITE_RAPIDAPI_KEY`
+    - **Value:** _Your actual RapidAPI key_
+4.  **Deploy:** Click the **Deploy** button.
+
+---
+
 ## Acknowledgments
 
 - This project was inspired by the tutorials and work of **JavaScript Mastery**.
 - The exercise data and GIFs are provided by a fantastic **open-source community project**.
+
+<!-- end list -->
+
+```
+
+```

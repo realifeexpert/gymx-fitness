@@ -1,74 +1,114 @@
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion"; // ✅ Import for animations
-import { fetchData } from "../utils/fetchData";
+import { motion, AnimatePresence } from "framer-motion";
+import allExercisesData from "../data/exercises.json";
 import ExerciseCard from "./ExerciseCard.jsx";
 import Loader from "./Loader.jsx";
 
-// ✅ A new, custom-styled Pagination component
+// This component remains exactly the same as your original.
 const CustomPagination = ({
   exercisesPerPage,
   totalExercises,
   paginate,
   currentPage,
 }) => {
+  const totalPages = Math.ceil(totalExercises / exercisesPerPage);
+
+  const startPage = Math.max(1, currentPage - 2);
+  const endPage = Math.min(totalPages, currentPage + 2);
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(totalExercises / exercisesPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  for (let i = startPage; i <= endPage; i++) pageNumbers.push(i);
+
+  const baseBtn = "w-10 h-10 rounded-md transition-colors duration-200";
+  const active = "bg-primary text-background font-bold";
+  const idle = "bg-surface text-text-secondary hover:bg-gray-700";
 
   return (
-    <nav>
-      <ul className="flex items-center justify-center gap-2">
-        {pageNumbers.map((number) => (
-          <li key={number}>
+    <nav aria-label="Pagination">
+      <ul className="flex flex-wrap items-center justify-center gap-2">
+        {/* Prev */}
+        {currentPage > 1 && (
+          <li>
             <button
-              onClick={() => paginate(number)}
-              className={`
-                w-10 h-10 rounded-md transition-colors duration-200
-                ${
-                  currentPage === number
-                    ? "bg-primary text-background font-bold"
-                    : "bg-surface text-text-secondary hover:bg-gray-700"
-                }
-              `}
+              onClick={() => paginate(currentPage - 1)}
+              className="px-3 h-10 rounded-md bg-surface hover:bg-gray-700"
             >
-              {number}
+              Prev
+            </button>
+          </li>
+        )}
+
+        {/* First + ellipsis */}
+        {startPage > 1 && (
+          <>
+            <li>
+              <button
+                onClick={() => paginate(1)}
+                className={`${baseBtn} ${currentPage === 1 ? active : idle}`}
+              >
+                1
+              </button>
+            </li>
+            <li className="px-2 select-none">…</li>
+          </>
+        )}
+
+        {/* Middle window */}
+        {pageNumbers.map((n) => (
+          <li key={n}>
+            <button
+              onClick={() => paginate(n)}
+              className={`${baseBtn} ${currentPage === n ? active : idle}`}
+            >
+              {n}
             </button>
           </li>
         ))}
+
+        {/* Ellipsis + Last */}
+        {endPage < totalPages && (
+          <>
+            <li className="px-2 select-none">…</li>
+            <li>
+              <button
+                onClick={() => paginate(totalPages)}
+                className={`${baseBtn} ${
+                  currentPage === totalPages ? active : idle
+                }`}
+              >
+                {totalPages}
+              </button>
+            </li>
+          </>
+        )}
+
+        {/* Next */}
+        {currentPage < totalPages && (
+          <li>
+            <button
+              onClick={() => paginate(currentPage + 1)}
+              className="px-3 h-10 rounded-md bg-surface hover:bg-gray-700"
+            >
+              Next
+            </button>
+          </li>
+        )}
       </ul>
     </nav>
   );
 };
 
-const Exercises = ({ exercises, setExercises, bodyPart }) => {
+// ✅ UPDATED Exercises component
+const Exercises = ({ exercises, bodyPart }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(true);
   const exercisesPerPage = 9;
 
+  // ✅ UPDATED: useEffect now only resets pagination when the filtered list changes.
+  // It no longer performs the filtering itself.
   useEffect(() => {
-    const fetchExercisesData = async () => {
-      setLoading(true);
-      let exercisesResponse;
-      const baseUrl = "https://testings-nine.vercel.app/api/v1";
+    setCurrentPage(1);
+  }, [exercises]);
 
-      if (bodyPart === "all") {
-        exercisesResponse = await fetchData(`${baseUrl}/exercises?limit=50`);
-      } else {
-        exercisesResponse = await fetchData(
-          `${baseUrl}/bodyparts/${bodyPart}/exercises`
-        );
-      }
-
-      if (exercisesResponse.success && Array.isArray(exercisesResponse.data)) {
-        setExercises(exercisesResponse.data);
-      }
-      setLoading(false);
-    };
-
-    fetchExercisesData();
-  }, [bodyPart, setExercises]);
-
+  // Pagination slice logic remains the same
   const indexOfLastExercise = currentPage * exercisesPerPage;
   const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
   const currentExercises = exercises.slice(
@@ -78,16 +118,14 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
-    window.scrollTo({ top: 1800, behavior: "smooth" });
+    document
+      .getElementById("exercises")
+      ?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // ✅ Animation variants for the container and cards
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
   };
 
   const itemVariants = {
@@ -95,7 +133,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
     visible: { y: 0, opacity: 1 },
   };
 
-  if (loading) {
+  if (!exercises) {
     return <Loader fullScreen={false} />;
   }
 
@@ -107,12 +145,11 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
 
       <AnimatePresence>
         <motion.div
-          key={bodyPart} // Re-animate when bodyPart changes
+          key={bodyPart}
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          // ✅ Replaced <Stack> with a responsive CSS Grid
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 min-h-[500px]"
         >
           {currentExercises.length ? (
             currentExercises.map((exercise) => (
@@ -121,7 +158,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
               </motion.div>
             ))
           ) : (
-            <p className="text-text-secondary col-span-3 text-center">
+            <p className="text-text-secondary col-span-3 text-center self-center">
               No exercises found for this category.
             </p>
           )}

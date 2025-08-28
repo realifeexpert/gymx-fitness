@@ -1,41 +1,41 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-// We no longer need any imports from @mui/material
-// const { Box, Button, Stack, Typography } = from "@mui/material";
-
 const ExerciseCard = ({ exercise }) => {
   return (
+    // ✅ Main container: Dark theme, rounded corners, and a "group" class for hover effects
     <Link
       to={`/exercise/${exercise.exerciseId}`}
-      // ✅ Replaced the inline style object with Tailwind classes
-      className="bg-white border-t-4 border-red-500 rounded-bl-2xl flex flex-col justify-between pb-3 transition-transform duration-300 ease-in-out hover:scale-105 cursor-pointer w-[350px] shadow-lg"
+      className="relative w-[350px] h-[450px] bg-gray-800 rounded-xl overflow-hidden shadow-lg group transition-all duration-300 ease-in-out hover:shadow-2xl hover:shadow-red-500/20 transform hover:-translate-y-2"
     >
-      {/* Replaced MUI <Box> with a standard <img> tag */}
+      {/* ✅ Image with a subtle zoom effect on hover */}
       <img
         src={exercise.gifUrl}
         alt={exercise.name}
         loading="lazy"
-        className="w-full h-[320px] object-cover" // ✅ All styling is now in className
+        className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
       />
 
-      {/* Replaced MUI <Stack> with a flex div */}
-      <div className="flex flex-row gap-2 justify-center mt-5">
-        {/* Replaced MUI <Button> with a styled <span> for the tag */}
-        <span className="text-white bg-[#FFA9A9] text-sm rounded-full capitalize py-1 px-4">
-          {exercise.bodyParts[0]}
-        </span>
+      {/* ✅ Gradient overlay for better text readability and a professional look */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
-        {/* Replaced MUI <Button> with a styled <span> for the tag */}
-        <span className="text-white bg-[#FCC757] text-sm rounded-full capitalize py-1 px-4">
-          {exercise.targetMuscles[0]}
-        </span>
+      {/* ✅ Container for all the text content, positioned at the bottom */}
+      <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
+        {/* ✅ Tags with a modern, semi-transparent background */}
+        <div className="flex flex-row gap-2 mb-3">
+          <span className="bg-red-500/80 text-white text-xs font-semibold rounded-full capitalize py-1 px-3 backdrop-blur-sm">
+            {exercise.bodyParts[0]}
+          </span>
+          <span className="bg-yellow-500/80 text-white text-xs font-semibold rounded-full capitalize py-1 px-3 backdrop-blur-sm">
+            {exercise.targetMuscles[0]}
+          </span>
+        </div>
+
+        {/* ✅ Exercise name with improved typography */}
+        <h3 className="font-bold capitalize text-2xl tracking-tight">
+          {exercise.name}
+        </h3>
       </div>
-
-      {/* Replaced MUI <Typography> with an <h3> tag */}
-      <h3 className="px-5 text-black font-bold mt-3 pb-2.5 capitalize text-xl text-center">
-        {exercise.name}
-      </h3>
     </Link>
   );
 };

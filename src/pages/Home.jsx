@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion"; // ✅ Import motion for animations
+import { motion } from "framer-motion";
+import Fuse from "fuse.js";
 
+import allExercisesData from "../data/exercises.json"; // Local data import
 import HeroBanner from "../components/HeroBanner.jsx";
 import SearchExercises from "../components/SearchExercises.jsx";
 import Exercises from "../components/Exercises.jsx";
 
-// Animation variants for sections to fade in as they're scrolled to
 const sectionVariants = {
   hidden: { opacity: 0, y: 50 },
   visible: {
@@ -16,16 +17,47 @@ const sectionVariants = {
 };
 
 const Home = () => {
-  const [exercises, setExercises] = useState([]);
+  // ✅ State ab local data se initialize ho raha hai
+  const [exercises, setExercises] = useState(allExercisesData);
   const [bodyPart, setBodyPart] = useState("all");
 
+  // Fuse.js setup for smart search
+  const fuse = new Fuse(allExercisesData, {
+    keys: ["name", "targetMuscles", "equipments", "bodyParts"],
+    threshold: 0.4,
+  });
+
+  // ✅ Filtering aur searching ka saara logic ab yahan hai
+  const handleSearch = (searchTerm) => {
+    if (searchTerm === "") {
+      setExercises(allExercisesData);
+      setBodyPart("all");
+      return;
+    }
+    const results = fuse.search(searchTerm);
+    const searchedExercises = results.map((result) => result.item);
+    setExercises(searchedExercises);
+    setBodyPart(`${searchTerm}`);
+  };
+
+  const handleBodyPartChange = (part) => {
+    setBodyPart(part);
+    if (part === "all") {
+      setExercises(allExercisesData);
+    } else {
+      const filtered = allExercisesData.filter((exercise) =>
+        exercise.bodyParts
+          .map((bp) => bp.toLowerCase())
+          .includes(part.toLowerCase())
+      );
+      setExercises(filtered);
+    }
+  };
+
   return (
-    // ✅ Replaced the MUI <Box> with a simple div or fragment
-    // Spacing is now handled by the components themselves for better control
     <div>
       <HeroBanner />
 
-      {/* ✅ Each section is wrapped in a motion.div for scroll-triggered animations */}
       <motion.div
         variants={sectionVariants}
         initial="hidden"
@@ -33,9 +65,10 @@ const Home = () => {
         viewport={{ once: true, amount: 0.2 }}
       >
         <SearchExercises
-          setExercises={setExercises}
+          // ✅ Naye functions ko as a prop pass karein
+          onSearch={handleSearch}
           bodyPart={bodyPart}
-          setBodyPart={setBodyPart}
+          setBodyPart={handleBodyPartChange}
         />
       </motion.div>
 
@@ -46,8 +79,8 @@ const Home = () => {
         viewport={{ once: true, amount: 0.2 }}
       >
         <Exercises
+          // ✅ Sirf zaroori props pass karein
           exercises={exercises}
-          setExercises={setExercises}
           bodyPart={bodyPart}
         />
       </motion.div>
