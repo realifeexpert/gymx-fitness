@@ -92,8 +92,6 @@ This application is deployed on **Vercel**. To deploy your own version, follow t
 - This project was inspired by the tutorials and work of **JavaScript Mastery**.
 - The exercise data and GIFs are provided by a fantastic **open-source community project**.
 
-<!-- end list -->
-
 ```
 
 ```
