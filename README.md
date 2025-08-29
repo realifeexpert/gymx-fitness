@@ -1,8 +1,8 @@
-# GymX Fitness App 💪
+# GymX Fitness Website 💪
 
-A modern and responsive fitness application built with React, Vite, and Tailwind CSS. This app operates on a fully local dataset of over 1,300 exercises, ensuring a fast, reliable, and offline-first experience.
+A modern and responsive fitness website built with React, Vite, and Tailwind CSS. This app operates on a fully local dataset of over 1,300 exercises, ensuring a fast, reliable, and offline-first experience.
 
-**[Live Demo](https://gym-x-fitness-app.vercel.app/)** 🚀
+**[Live Demo](https://gym-x-fitness.vercel.app/)** 🚀
 
 ---
 
