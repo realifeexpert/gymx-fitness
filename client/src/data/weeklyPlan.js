@@ -14,7 +14,7 @@ export const weeklyPlan = {
     focus: "Core & Cardio",
     videos: ["yz4u_pklMQ0", "gTM8YUBFZHE", "bdCX8Nb_2Mg"],
   },
-  thursday: {
+   thursday: {
     day: "Thursday",
     focus: "Upper Body",
     videos: ["WGA_ctAMkMk", "EDQMGR93oxE", "wUtrI5bnrUc"],
