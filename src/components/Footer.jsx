@@ -10,13 +10,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
           {/* Column 1: Logo and Brand Info */}
           <div className="flex flex-col items-center md:items-start">
-            {/* ✅ Using a filter to brighten the logo on dark background, can be removed if your logo is already bright */}
             <img
               src={Logo}
               alt="Golds Gym Logo"
               className="w-40 mb-4 brightness-200"
             />
-            {/* ✅ Increased text brightness for readability */}
             <p className="text-gray-300 text-sm max-w-xs">
               Your ultimate fitness partner. Find the best exercises tailored
               for you.
@@ -25,12 +23,10 @@ const Footer = () => {
 
           {/* Column 2: Quick Links */}
           <div>
-            {/* ✅ Softened the heading color slightly */}
             <h3 className="font-bold text-lg mb-4 tracking-wider uppercase text-gray-100">
               Quick Links
             </h3>
             <div className="flex flex-col space-y-3">
-              {/* ✅ Made links much brighter (gray-200) for high contrast */}
               <a
                 href="/"
                 className="text-gray-200 hover:text-[#FF2625] transition-colors duration-300 hover:underline"
@@ -58,7 +54,6 @@ const Footer = () => {
               Follow Us
             </h3>
             <div className="flex justify-center md:justify-start gap-x-6">
-              {/* ✅ Made icons brighter to match the links */}
               <a
                 href="https://www.youtube.com"
                 target="_blank"
@@ -91,24 +86,9 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar: Credits and Copyright */}
-        <div className="mt-16 pt-8 border-t border-gray-800 text-center text-gray-400">
-          <p className="mb-2">
-            Made with{" "}
-            <span role="img" aria-label="heart">
-              ❤️
-            </span>{" "}
-            by {/* ✅ Styled the link to match the brand color */}
-            <a
-              href="https://www.jsmastery.pro/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-bold text-[#FF2625] hover:underline"
-            >
-              JavaScript Mastery
-            </a>
-          </p>
-          {/* ✅ Updated text to match your screenshot and increased brightness */}
-          <p className="text-sm">
+        <div className="mt-16 pt-8 border-t border-gray-700 text-center">
+          <p className="text-gray-400 text-sm">Made with ❤️</p>
+          <p className="text-gray-500 text-xs mt-2">
             © {new Date().getFullYear()} Golds Gym. All rights reserved.
           </p>
         </div>
