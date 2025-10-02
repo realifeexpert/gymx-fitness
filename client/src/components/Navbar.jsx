@@ -10,7 +10,7 @@ const Navbar = () => {
     "no-underline text-[#3A1212] border-b-2 border-red-500 pb-1 font-semibold transition-all duration-300";
   const normalLinkStyle =
     "no-underline text-[#3A1212] pb-1 font-medium transition-all duration-300 hover:text-red-500 hover:border-b-2 hover:border-red-500";
-
+ 
   return (
     <nav className="fixed top-0 z-50 w-full bg-white px-4 sm:px-8 md:px-12 py-3 sm:py-4 shadow-lg border-b border-gray-100">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
